@@ -1,0 +1,760 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <title>Schema documentation for </title>
+      <link rel="stylesheet" href="docHtml.css" type="text/css" /><script type="text/javascript">
+         <!--
+        
+      
+        var button_prefix = 'button_';
+        
+        /**
+        * Returns an element in the current HTML document.
+        *
+        * @param elementID Identifier of HTML element
+        * @return               HTML element object
+        */
+        function getElementObject(elementID) {
+            var elemObj = null;
+            if (document.getElementById) {
+                elemObj = document.getElementById(elementID);
+            }
+            return elemObj;
+        }
+        
+        /**
+        * Switches the state of a collapseable box, e.g.
+        * if it's opened, it'll be closed, and vice versa.
+        *
+        * @param boxID Identifier of box
+        */
+        function switchState(boxID) {
+            var boxObj = getElementObject(boxID);
+            var buttonObj = getElementObject(button_prefix + boxID);
+            if (boxObj == null || buttonObj == null) {
+                // Box or button not found
+            } else if (boxObj.style.display == "none") {
+                // Box is closed, so open it
+                openBox(boxObj, buttonObj);
+            } else if (boxObj.style.display == "block") {
+                // Box is opened, so close it
+                closeBox(boxObj, buttonObj);
+            }
+        }
+        
+        /**
+        * Opens a collapseable box.
+        *
+        * @param boxObj       Collapseable box
+        * @param buttonObj Button controlling box
+        */
+        function openBox(boxObj, buttonObj) {
+            if (boxObj == null || buttonObj == null) {
+                // Box or button not found
+            } else {
+                // Change 'display' CSS property of box
+                boxObj.style.display = "block";
+                
+                // Change text of button
+                if (boxObj.style.display == "block") {
+                    buttonObj.src = "img/btM.gif";
+                }
+            }
+        }
+        
+        /**
+        * Closes a collapseable box.
+        *
+        * @param boxObj       Collapseable box
+        * @param buttonObj Button controlling box
+        */
+        function closeBox(boxObj, buttonObj) {
+            if (boxObj == null || buttonObj == null) {
+                // Box or button not found
+            } else {
+                // Change 'display' CSS property of box
+                boxObj.style.display = "none";
+                
+                // Change text of button
+                if (boxObj.style.display == "none") {
+                    buttonObj.src = "img/btP.gif";
+                }
+            }
+        }
+    
+       function switchStateForAll(buttonObj, boxList) {
+            if (buttonObj == null) {
+                // button not found
+            } else if (buttonObj.value == "+") {
+                // Expand all
+                expandAll(boxList);
+                buttonObj.value = "-";
+            } else if (buttonObj.value == "-") {
+                // Collapse all
+                collapseAll(boxList);
+                buttonObj.value = "+";
+            }
+        }
+        
+        /**
+        * Closes all boxes in a given list.
+        *
+        * @param boxList Array of box IDs
+        */
+        function collapseAll(boxList) {
+            var idx;
+            for (idx = 0; idx < boxList.length; idx++) {
+                var boxObj = getElementObject(boxList[idx]);
+                var buttonObj = getElementObject(button_prefix + boxList[idx]);
+                closeBox(boxObj, buttonObj);
+            }
+        }
+            
+        /**
+        * Open all boxes in a given list.
+        *
+        * @param boxList Array of box IDs
+        */
+        function expandAll(boxList) {
+            var idx;
+            for (idx = 0; idx < boxList.length; idx++) {
+                var boxObj = getElementObject(boxList[idx]);
+                var buttonObj = getElementObject(button_prefix + boxList[idx]);
+                openBox(boxObj, buttonObj);
+            }
+        }
+        
+        /**
+         * Update the message presented in the title of the html page.
+         * - If the documentation was splited by namespace we present something like: "Documentation for namespace 'ns'"
+         * - If the documentation was splited by location we present somehing like: "Documentation for 'Schema.xsd'"
+         * - If no split we always present: "Documentation for 'MainSchema.xsd'"
+         */
+        function updatePageTitle(message) {
+            top.document.title = message;
+        }
+        
+          
+                    
+         /**
+          * Finds an HTML element by its ID and makes it floatable over the normal content.
+          *
+          * @param x_displacement The difference in pixels to the right side of the window from 
+          *           the left side of the element.
+          * @param y_displacement The difference in pixels to the right side of the window from 
+          *           the top of the element.          
+          */
+         function findAndFloat(id, x_displacement, y_displacement){
+
+            var element = getElementObject(id);            
+            
+            window[id + "_obj"] = element;
+            
+            if(document.layers) {
+               element.style = element;
+            }
+            
+            element.current_y = y_displacement;      
+            element.first_time = true;
+         
+            element.floatElement = function(){
+               // It may be closed by an user action.
+                
+               // Target X and Y coordinates.
+               var x, y;
+               
+               var myWidth = 0, myHeight = 0;
+               if( typeof( window.innerWidth ) == 'number' ) {
+                  //Non-IE
+                  myWidth = window.innerWidth;
+                  myHeight = window.innerHeight;
+               } else if( document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) {
+                  //IE 6+ in 'standards compliant mode'
+                  myWidth = document.documentElement.clientWidth;
+                  myHeight = document.documentElement.clientHeight;
+               } else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {
+                  //IE 4 compatible
+                  myWidth = document.body.clientWidth;
+                  myHeight = document.body.clientHeight;
+               }
+               
+               
+               x = myWidth - x_displacement;
+               
+               var ns = (navigator.appName.indexOf("Netscape") != -1);               
+               y = ns ? pageYOffset : document.documentElement && document.documentElement.scrollTop ? 
+                  document.documentElement.scrollTop : document.body.scrollTop;               
+               y = y + y_displacement;               
+               
+               // The current y is the current coordinate of the floating element.
+               // This should be at the limit the y target coordinate.
+               this.current_y += (y - this.current_y)/1.25;
+               
+               // Add the pixels constant after the values
+               // and move the element.
+               var px = document.layers ? "" : "px";
+               this.style.left =  x + px;
+               this.style.top =  this.current_y + px;
+                              
+               setTimeout(this.id + "_obj.floatElement()", 100);
+            }
+            
+            element.floatElement();
+            return element;
+          }
+
+         /**
+          * Finds an HTML element by its ID and makes it floatable over the normal content.
+          *
+          * @param x_displacement The difference in pixels to the right side of the window from 
+          *           the left side of the element.
+          * @param y_displacement The difference in pixels to the right side of the window from 
+          *           the top of the element.          
+          */
+         function selectTOCGroupBy(id, isChunked, indexFileLocation, indexFileNamespace, indexFileComponent){
+
+            if (!isChunked) {
+             var selectIds = new Array('toc_group_by_namespace', 'toc_group_by_location', 'toc_group_by_component_type');
+             // Make all the tabs invisible.
+               for (i = 0; i < 3; i++){
+                  var tab = getElementObject(selectIds[i]);
+                  tab.style.display = 'none';
+               }
+               var selTab = getElementObject(id);
+               selTab.style.display = 'block';
+            } else {
+             if (id == 'toc_group_by_namespace') {
+               parent.indexFrame.location = indexFileNamespace;
+             } else  if (id == 'toc_group_by_location') {
+               parent.indexFrame.location = indexFileLocation;
+             } else  if (id == 'toc_group_by_component_type') {
+              parent.indexFrame.location = indexFileComponent;
+             }
+            }
+         }
+          
+
+    
+                        //--></script></head>
+   <body>
+      <h2><a id="INDEX">Table of Contents</a></h2>
+      <div class="toc">
+         <form action="none">
+            <div><span> Group by: <select id="selectTOC" onchange="selectTOCGroupBy(this.options[this.selectedIndex].value, true, 'AgsSchema.indexList.html', 'AgsSchema.indexListns.html', 'AgsSchema.indexListcomp.html');">
+                     <option value="toc_group_by_namespace">Namespace</option>
+                     <option value="toc_group_by_location">Location</option>
+                     <option value="toc_group_by_component_type" selected="selected">Component Type</option></select></span></div>
+         </form>
+         <div class="level1" id="toc_group_by_component_type" style="display:block">
+            <div>
+               <div class="horizontalLayout">
+                  <table class="rt">
+                     <tr>
+                        <td class="rt_cornerTopLeft"></td>
+                        <td class="rt_lineTop"></td>
+                        <td class="rt_cornerTopRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_lineLeft"></td>
+                        <td class="rt_content">
+                           <table class="componentGroup">
+                              <tbody>
+                                 <tr>
+                                    <td class="componentGroup"><input id="button_Main_schema" type="image" value="-" src="img/btM.gif" onclick="switchState('Main_schema');" class="control" /></td>
+                                    <td class="componentGroup">
+                                       <div class="componentGroupTitle">Main Schema</div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="componentGroup"></td>
+                                    <td class="componentGroup">
+                                       <div id="Main_schema" class="componentGroup" style="display:block">
+                                          <div><b><a href="AgsSchema_xsd.html#AgsSchema.xsd" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">AgsSchema.xsd</a></b></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </td>
+                        <td class="rt_lineRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_cornerBottomLeft"></td>
+                        <td class="rt_lineBottom"></td>
+                        <td class="rt_cornerBottomRight"></td>
+                     </tr>
+                  </table>
+               </div>
+               <div class="horizontalLayout">
+                  <table class="rt">
+                     <tr>
+                        <td class="rt_cornerTopLeft"></td>
+                        <td class="rt_lineTop"></td>
+                        <td class="rt_cornerTopRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_lineLeft"></td>
+                        <td class="rt_content">
+                           <table class="componentGroup">
+                              <tbody>
+                                 <tr>
+                                    <td class="componentGroup"><input id="button_Imported_schema" type="image" value="-" src="img/btM.gif" onclick="switchState('Imported_schema');" class="control" /></td>
+                                    <td class="componentGroup">
+                                       <div class="componentGroupTitle">Imported Schemas</div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="componentGroup"></td>
+                                    <td class="componentGroup">
+                                       <div id="Imported_schema" class="componentGroup" style="display:block">
+                                          <div><b><a href="xml_xsd.html#xml.xsd" target="mainFrame" title="http://www.w3.org/XML/1998/namespace" onclick="updatePageTitle('Schema documentation for xml.xsd')">xml.xsd</a></b></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </td>
+                        <td class="rt_lineRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_cornerBottomLeft"></td>
+                        <td class="rt_lineBottom"></td>
+                        <td class="rt_cornerBottomRight"></td>
+                     </tr>
+                  </table>
+               </div>
+               <div class="horizontalLayout">
+                  <table class="rt">
+                     <tr>
+                        <td class="rt_cornerTopLeft"></td>
+                        <td class="rt_lineTop"></td>
+                        <td class="rt_cornerTopRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_lineLeft"></td>
+                        <td class="rt_content">
+                           <table class="componentGroup">
+                              <tbody>
+                                 <tr>
+                                    <td class="componentGroup"><input id="button_Element" type="image" value="-" src="img/btM.gif" onclick="switchState('Element');" class="control" /></td>
+                                    <td class="componentGroup">
+                                       <div class="componentGroupTitle">Elements</div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="componentGroup"></td>
+                                    <td class="componentGroup">
+                                       <div id="Element" class="componentGroup" style="display:block">
+                                          <div><b><a href="AgsSchema_xsd.html#AAScaledSprites" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">AAScaledSprites</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#AGSEditorDocument" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">AGSEditorDocument</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#AdjustSpeedWithScaling" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">AdjustSpeedWithScaling</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#AdjustVolumeWithScaling" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">AdjustVolumeWithScaling</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#AllowRelativeAssetResolutions" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">AllowRelativeAssetResolutions</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#AlwaysDisplayTextAsSpeech" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">AlwaysDisplayTextAsSpeech</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Animate" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Animate</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#AnimateOnlyOnHotspots" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">AnimateOnlyOnHotspots</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#AnimateOnlyWhenMoving" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">AnimateOnlyWhenMoving</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#AnimationDelay" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">AnimationDelay</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#AntiAliasFonts" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">AntiAliasFonts</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#AntiGlideMode" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">AntiGlideMode</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#AudioClipFolder" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">AudioClipFolder</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#AudioClipType" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">AudioClipType</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#AudioClipTypes" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">AudioClipTypes</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#AudioClips" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">AudioClips</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#AudioIndexer" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">AudioIndexer</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Author" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Author</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#AutoLockMouse" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">AutoLockMouse</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#AutoMoveInWalkMode" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">AutoMoveInWalkMode</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#AutoOutlineStyle" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">AutoOutlineStyle</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#AutoOutlineThickness" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">AutoOutlineThickness</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#BackgroundColor" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">BackgroundColor</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#BackgroundImage" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">BackgroundImage</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#BackwardsCompatibilityType" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">BackwardsCompatibilityType</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#BackwardsText" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">BackwardsText</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#BinaryFilesInSourceControl" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">BinaryFilesInSourceControl</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#BlinkingView" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">BlinkingView</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#BorderColor" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">BorderColor</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#BuildTargets" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">BuildTargets</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#CSSStyle" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">CSSStyle</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Character" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Character</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#CharacterFolder" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">CharacterFolder</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#CharacterID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">CharacterID</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Characters" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Characters</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#CharsForFrame" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">CharsForFrame</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#ClickAction" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">ClickAction</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Clickable" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Clickable</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#ClipImage" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">ClipImage</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#ColorDepth" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">ColorDepth</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Component" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Component</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#CompressSprites" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">CompressSprites</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Controls" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Controls</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#CrossfadeClips" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">CrossfadeClips</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#CrossfadeMusic" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">CrossfadeMusic</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#CursorImage" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">CursorImage</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Cursors" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Cursors</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#CustomAppDataPath" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">CustomAppDataPath</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#CustomFunctions" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">CustomFunctions</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#CustomResolution" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">CustomResolution</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#CustomSavePath" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">CustomSavePath</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Data" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Data</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#DebugMode" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">DebugMode</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#DefaultBundlingType" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">DefaultBundlingType</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#DefaultFrame" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">DefaultFrame</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#DefaultPriority" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">DefaultPriority</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#DefaultRepeat" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">DefaultRepeat</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#DefaultRoomMaskResolution" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">DefaultRoomMaskResolution</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#DefaultType" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">DefaultType</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#DefaultVolume" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">DefaultVolume</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Delay" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Delay</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#DeletedViews" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">DeletedViews</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Description" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Description</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#DeveloperName" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">DeveloperName</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#DeveloperURL" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">DeveloperURL</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#DiagonalLoops" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">DiagonalLoops</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#DialogFolder" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">DialogFolder</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#DialogOptionsBackwards" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">DialogOptionsBackwards</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#DialogOptionsBullet" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">DialogOptionsBullet</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#DialogOptionsGUI" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">DialogOptionsGUI</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#DialogOptionsGap" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">DialogOptionsGap</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#DialogParsing" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">DialogParsing</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#DialogScriptNarrateFunction" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">DialogScriptNarrateFunction</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#DialogScriptSayFunction" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">DialogScriptSayFunction</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Dialogs" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Dialogs</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#DigitalSound" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">DigitalSound</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#DisplayMultipleInventory" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">DisplayMultipleInventory</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Document" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Document</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#DowngradeTo16bit" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">DowngradeTo16bit</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Edit" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Edit</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Enabled" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Enabled</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#EnforceNewAudio" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">EnforceNewAudio</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#EnforceNewStrings" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">EnforceNewStrings</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#EnforceObjectBasedScript" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">EnforceObjectBasedScript</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#EnhancedSaveGames" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">EnhancedSaveGames</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Event" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Event</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#FileName" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">FileName</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Flipped" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Flipped</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Font" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Font</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Fonts" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Fonts</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Format" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Format</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Frame" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Frame</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Frames" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Frames</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#FullscreenGameScaling" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">FullscreenGameScaling</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#GUIAlphaStyle" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">GUIAlphaStyle</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#GUIButton" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">GUIButton</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#GUIDAsString" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">GUIDAsString</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#GUIFolder" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">GUIFolder</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#GUIInventory" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">GUIInventory</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#GUILabel" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">GUILabel</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#GUIListBox" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">GUIListBox</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#GUIMain" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">GUIMain</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#GUISlider" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">GUISlider</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#GUITextBox" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">GUITextBox</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#GUITextWindowEdge" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">GUITextWindowEdge</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#GUIs" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">GUIs</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Game" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Game</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#GameExplorerEnabled" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">GameExplorerEnabled</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#GameFileName" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">GameFileName</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#GameName" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">GameName</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#GameScaling" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">GameScaling</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#GameScalingMultiplier" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">GameScalingMultiplier</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Genre" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Genre</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#GlobalMessages" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">GlobalMessages</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#GlobalSpeechAnimationDelay" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">GlobalSpeechAnimationDelay</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#GlobalVariables" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">GlobalVariables</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#GraphicsDriver" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">GraphicsDriver</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#GraphicsFilter" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">GraphicsFilter</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#HandleImage" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">HandleImage</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#HandleInvClicksInScript" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">HandleInvClicksInScript</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#HandleOffset" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">HandleOffset</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#HasMODMusic" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">HasMODMusic</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Height" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Height</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#HotspotX" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">HotspotX</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#HotspotY" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">HotspotY</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#ID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">ID</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#IdleView" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">IdleView</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Image" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Image</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#ImportAlphaChannel" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">ImportAlphaChannel</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#ImportAsTile" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">ImportAsTile</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#ImportHeight" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">ImportHeight</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#ImportMethod" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">ImportMethod</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#ImportWidth" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">ImportWidth</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Interactions" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Interactions</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#InventoryCursors" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">InventoryCursors</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#InventoryHotspotMarkerCrosshairColor" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">InventoryHotspotMarkerCrosshairColor</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#InventoryHotspotMarkerDotColor" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">InventoryHotspotMarkerDotColor</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#InventoryHotspotMarkerSprite" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">InventoryHotspotMarkerSprite</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#InventoryHotspotMarkerStyle" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">InventoryHotspotMarkerStyle</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#InventoryItem" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">InventoryItem</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#InventoryItemFolder" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">InventoryItemFolder</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#InventoryItems" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">InventoryItems</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#IsHeader" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">IsHeader</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#ItemHeight" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">ItemHeight</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#ItemWidth" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">ItemWidth</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Key" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Key</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Left" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Left</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#LeftToRightPrecedence" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">LeftToRightPrecedence</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#LegacySpeechAnimationSpeed" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">LegacySpeechAnimationSpeed</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#LetterboxMode" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">LetterboxMode</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#LineSpacing" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">LineSpacing</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#LipSync" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">LipSync</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Locked" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Locked</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Loop" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Loop</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Loops" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Loops</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#MaxChannels" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">MaxChannels</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#MaxValue" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">MaxValue</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#MaximumScore" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">MaximumScore</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Message" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Message</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#MidiSound" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">MidiSound</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#MinValue" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">MinValue</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#MouseCursor" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">MouseCursor</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#MouseSpeed" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">MouseSpeed</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#MouseWheelEnabled" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">MouseWheelEnabled</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#MouseoverImage" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">MouseoverImage</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#MovementLinkedToAnimation" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">MovementLinkedToAnimation</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#MovementSpeed" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">MovementSpeed</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#MovementSpeedX" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">MovementSpeedX</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#MovementSpeedY" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">MovementSpeedY</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Name" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Name</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#NewModeNumber" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">NewModeNumber</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#NormalGUI" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">NormalGUI</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#NormalView" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">NormalView</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Number" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Number</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#NumberDialogOptions" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">NumberDialogOptions</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#OffsetX" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">OffsetX</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#OffsetY" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">OffsetY</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#OldInteractionVariables" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">OldInteractionVariables</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#OnActivate" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">OnActivate</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#OnChange" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">OnChange</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#OnClick" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">OnClick</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#OnSelectionChanged" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">OnSelectionChanged</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#OutlineFont" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">OutlineFont</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#OutlineStyle" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">OutlineStyle</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Padding" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Padding</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Palette" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Palette</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#PaletteEntry" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">PaletteEntry</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#PamFiles" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">PamFiles</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#PixelPerfect" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">PixelPerfect</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#PlaySoundOnScore" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">PlaySoundOnScore</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#PlayerCharacter" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">PlayerCharacter</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#PlayerStartsWithItem" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">PlayerStartsWithItem</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Plugin" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Plugin</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Plugins" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Plugins</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#PointSize" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">PointSize</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#PopupStyle" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">PopupStyle</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#PopupYPos" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">PopupYPos</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#ProjectUnderControl" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">ProjectUnderControl</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Properties" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Properties</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#PropertyDefinitions" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">PropertyDefinitions</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#PushedImage" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">PushedImage</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#RealName" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">RealName</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#ReleaseDate" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">ReleaseDate</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#RemapToGamePalette" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">RemapToGamePalette</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#RemapToRoomPalette" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">RemapToRoomPalette</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#RenderAtScreenResolution" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">RenderAtScreenResolution</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#RoomTransition" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">RoomTransition</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Rooms" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Rooms</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#RunGameLoopsWhileDialogOptionsDisplayed" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">RunGameLoopsWhileDialogOptionsDisplayed</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#RunNextLoop" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">RunNextLoop</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#RuntimeSetup" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">RuntimeSetup</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#SaveGameFileExtension" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">SaveGameFileExtension</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#SaveGameFolderName" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">SaveGameFolderName</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#SaveScreenshots" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">SaveScreenshots</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#ScaleMovementSpeedWithMaskResolution" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">ScaleMovementSpeedWithMaskResolution</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#NO_NAMESPACE_Script" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Script</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#ScriptAPIVersion" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">ScriptAPIVersion</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#ScriptAndHeader" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">ScriptAndHeader</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#ScriptAndHeader_Header" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">ScriptAndHeader_Header</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#ScriptAndHeader_Script" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">ScriptAndHeader_Script</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#ScriptAndHeaders" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">ScriptAndHeaders</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#ScriptCompatLevel" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">ScriptCompatLevel</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#ScriptFolder" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">ScriptFolder</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#ScriptName" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">ScriptName</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Scripts" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Scripts</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#SelectedBackgroundColor" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">SelectedBackgroundColor</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#SelectedTextColor" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">SelectedTextColor</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Settings" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Settings</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#ShowBorder" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">ShowBorder</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#ShowScrollArrows" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">ShowScrollArrows</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#SizeMultiplier" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">SizeMultiplier</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#SkipSpeech" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">SkipSpeech</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Solid" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Solid</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Sound" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Sound</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Source" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Source</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#SourceFilename" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">SourceFilename</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#SpeechAnimationDelay" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">SpeechAnimationDelay</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#SpeechCenter" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">SpeechCenter</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#SpeechColor" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">SpeechColor</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#SpeechLines" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">SpeechLines</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#SpeechPortraitSide" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">SpeechPortraitSide</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#SpeechStyle" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">SpeechStyle</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#SpeechView" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">SpeechView</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#SpeechVoxFiles" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">SpeechVoxFiles</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#SplitResources" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">SplitResources</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Sprite" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Sprite</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#SpriteAlphaStyle" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">SpriteAlphaStyle</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#SpriteCacheSize" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">SpriteCacheSize</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#SpriteFolder" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">SpriteFolder</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Sprites" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Sprites</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#StandardMode" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">StandardMode</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#StartX" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">StartX</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#StartY" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">StartY</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#StartingRoom" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">StartingRoom</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Styles" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Styles</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#SubFolders" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">SubFolders</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Text" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Text</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#TextAlignment" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">TextAlignment</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#TextColor" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">TextColor</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#TextParser" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">TextParser</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#TextParserWord" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">TextParserWord</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#TextWindowGUI" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">TextWindowGUI</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#ThinkingView" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">ThinkingView</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#ThoughtGUI" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">ThoughtGUI</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#ThreadedAudio" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">ThreadedAudio</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#TitleText" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">TitleText</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Top" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Top</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Translated" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Translated</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Translation" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Translation</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Translations" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Translations</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Transparency" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Transparency</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#TurnBeforeFacing" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">TurnBeforeFacing</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#TurnBeforeWalking" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">TurnBeforeWalking</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Type" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Type</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#TypeID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">TypeID</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#UniformMovementSpeed" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">UniformMovementSpeed</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#UniqueID" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">UniqueID</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#UnloadedRoom" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">UnloadedRoom</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#UnloadedRoomFolder" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">UnloadedRoomFolder</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#UnloadedRooms" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">UnloadedRooms</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#UseCustomAppDataPath" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">UseCustomAppDataPath</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#UseCustomSavePath" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">UseCustomSavePath</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#UseGlobalSpeechAnimationDelay" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">UseGlobalSpeechAnimationDelay</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#UseLowResCoordinatesInScript" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">UseLowResCoordinatesInScript</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#UseOldCustomDialogOptionsAPI" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">UseOldCustomDialogOptionsAPI</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#UseRoomAreaLighting" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">UseRoomAreaLighting</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#UseRoomAreaScaling" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">UseRoomAreaScaling</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#UseVoicePack" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">UseVoicePack</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#VSync" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">VSync</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Value" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Value</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Variables" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Variables</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Version" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Version</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#VerticalOffset" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">VerticalOffset</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#View" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">View</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#ViewFolder" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">ViewFolder</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#ViewFrame" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">ViewFrame</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Views" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Views</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Visible" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Visible</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#VoiceActorScripts" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">VoiceActorScripts</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#VolumeReductionWhileSpeechPlaying" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">VolumeReductionWhileSpeechPlaying</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#WalkInLookMode" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">WalkInLookMode</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#WhenInterfaceDisabled" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">WhenInterfaceDisabled</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Width" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Width</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Windowed" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Windowed</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#WindowsExperienceIndex" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">WindowsExperienceIndex</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Word" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Word</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#WordGroup" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">WordGroup</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#Words" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Words</a></b></div>
+                                          <div><b><a href="AgsSchema_xsd.html#ZOrder" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">ZOrder</a></b></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </td>
+                        <td class="rt_lineRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_cornerBottomLeft"></td>
+                        <td class="rt_lineBottom"></td>
+                        <td class="rt_cornerBottomRight"></td>
+                     </tr>
+                  </table>
+               </div>
+               <div class="horizontalLayout">
+                  <table class="rt">
+                     <tr>
+                        <td class="rt_cornerTopLeft"></td>
+                        <td class="rt_lineTop"></td>
+                        <td class="rt_cornerTopRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_lineLeft"></td>
+                        <td class="rt_content">
+                           <table class="componentGroup">
+                              <tbody>
+                                 <tr>
+                                    <td class="componentGroup"><input id="button_Complex_Type" type="image" value="-" src="img/btM.gif" onclick="switchState('Complex_Type');" class="control" /></td>
+                                    <td class="componentGroup">
+                                       <div class="componentGroupTitle">Complex Types</div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="componentGroup"></td>
+                                    <td class="componentGroup">
+                                       <div id="Complex_Type" class="componentGroup" style="display:block">
+                                          <div><b><a href="AgsSchema_xsd.html#Script" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for AgsSchema.xsd')">Script</a></b></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </td>
+                        <td class="rt_lineRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_cornerBottomLeft"></td>
+                        <td class="rt_lineBottom"></td>
+                        <td class="rt_cornerBottomRight"></td>
+                     </tr>
+                  </table>
+               </div>
+               <div class="horizontalLayout">
+                  <table class="rt">
+                     <tr>
+                        <td class="rt_cornerTopLeft"></td>
+                        <td class="rt_lineTop"></td>
+                        <td class="rt_cornerTopRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_lineLeft"></td>
+                        <td class="rt_content">
+                           <table class="componentGroup">
+                              <tbody>
+                                 <tr>
+                                    <td class="componentGroup"><input id="button_Attribute" type="image" value="-" src="img/btM.gif" onclick="switchState('Attribute');" class="control" /></td>
+                                    <td class="componentGroup">
+                                       <div class="componentGroupTitle">Attributes</div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="componentGroup"></td>
+                                    <td class="componentGroup">
+                                       <div id="Attribute" class="componentGroup" style="display:block">
+                                          <div><b><a href="xml_xsd.html#space" target="mainFrame" title="http://www.w3.org/XML/1998/namespace" onclick="updatePageTitle('Schema documentation for xml.xsd')">@xml:space</a></b></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </td>
+                        <td class="rt_lineRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_cornerBottomLeft"></td>
+                        <td class="rt_lineBottom"></td>
+                        <td class="rt_cornerBottomRight"></td>
+                     </tr>
+                  </table>
+               </div>
+               <div style="clear:left"></div>
+            </div>
+         </div>
+      </div>
+      <div class="footer">
+         <hr />
+         <div align="center">XML Schema documentation generated by <a href="http://www.oxygenxml.com" target="_parent"><span class="oXygenLogo"><span class="redX">&lt;</span>o<span class="redX">X</span>ygen<span class="redX">/&gt;</span></span></a><sup>®</sup> XML Editor Trial Edition.
+         </div>
+      </div>
+   </body>
+</html>

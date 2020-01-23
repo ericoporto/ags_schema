@@ -1,0 +1,1267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+  <xs:element name="AGSEditorDocument">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Game"/>
+        <xs:element maxOccurs="unbounded" ref="Component"/>
+      </xs:sequence>
+      <xs:attribute name="EditorVersion" use="required" type="xs:NMTOKEN"/>
+      <xs:attribute name="Version" use="required" type="xs:NMTOKEN"/>
+      <xs:attribute name="VersionIndex" use="required" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Game">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Settings"/>
+        <xs:element ref="RuntimeSetup"/>
+        <xs:element ref="LipSync"/>
+        <xs:element ref="PropertyDefinitions"/>
+        <xs:element ref="GlobalMessages"/>
+        <xs:element ref="OldInteractionVariables"/>
+        <xs:element ref="Plugins"/>
+        <xs:element ref="Rooms"/>
+        <xs:element ref="GUIs"/>
+        <xs:element ref="InventoryItems"/>
+        <xs:element ref="TextParser"/>
+        <xs:element ref="Characters"/>
+        <xs:element ref="PlayerCharacter"/>
+        <xs:element ref="Dialogs"/>
+        <xs:element ref="Cursors"/>
+        <xs:element ref="Fonts"/>
+        <xs:element ref="Palette"/>
+        <xs:element ref="GlobalVariables"/>
+        <xs:element ref="Sprites"/>
+        <xs:element ref="Views"/>
+        <xs:element ref="DeletedViews"/>
+        <xs:element ref="Scripts"/>
+        <xs:element ref="AudioClips"/>
+        <xs:element ref="AudioClipTypes"/>
+        <xs:element ref="Translations"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RuntimeSetup">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="GraphicsDriver"/>
+        <xs:element ref="Windowed"/>
+        <xs:element ref="FullscreenGameScaling"/>
+        <xs:element ref="GameScaling"/>
+        <xs:element ref="GameScalingMultiplier"/>
+        <xs:element ref="GraphicsFilter"/>
+        <xs:element ref="VSync"/>
+        <xs:element ref="AAScaledSprites"/>
+        <xs:element ref="DowngradeTo16bit"/>
+        <xs:element ref="RenderAtScreenResolution"/>
+        <xs:element ref="DigitalSound"/>
+        <xs:element ref="MidiSound"/>
+        <xs:element ref="UseVoicePack"/>
+        <xs:element ref="ThreadedAudio"/>
+        <xs:element ref="Translation"/>
+        <xs:element ref="AutoLockMouse"/>
+        <xs:element ref="MouseSpeed"/>
+        <xs:element ref="SpriteCacheSize"/>
+        <xs:element ref="UseCustomSavePath"/>
+        <xs:element ref="CustomSavePath"/>
+        <xs:element ref="UseCustomAppDataPath"/>
+        <xs:element ref="CustomAppDataPath"/>
+        <xs:element ref="TitleText"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GraphicsDriver" type="xs:NCName"/>
+  <xs:element name="Windowed" type="xs:NCName"/>
+  <xs:element name="FullscreenGameScaling" type="xs:NCName"/>
+  <xs:element name="GameScaling" type="xs:NCName"/>
+  <xs:element name="GameScalingMultiplier" type="xs:integer"/>
+  <xs:element name="GraphicsFilter" type="xs:NCName"/>
+  <xs:element name="VSync" type="xs:NCName"/>
+  <xs:element name="AAScaledSprites" type="xs:NCName"/>
+  <xs:element name="DowngradeTo16bit" type="xs:NCName"/>
+  <xs:element name="DigitalSound" type="xs:NCName"/>
+  <xs:element name="MidiSound" type="xs:NCName"/>
+  <xs:element name="UseVoicePack" type="xs:NCName"/>
+  <xs:element name="ThreadedAudio" type="xs:NCName"/>
+  <xs:element name="Translation">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="AutoLockMouse" type="xs:NCName"/>
+  <xs:element name="MouseSpeed" type="xs:integer"/>
+  <xs:element name="SpriteCacheSize" type="xs:integer"/>
+  <xs:element name="UseCustomSavePath" type="xs:NCName"/>
+  <xs:element name="CustomSavePath">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="UseCustomAppDataPath" type="xs:NCName"/>
+  <xs:element name="CustomAppDataPath">
+    <xs:complexType>
+      <xs:attribute name="IsNull" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TitleText">
+    <xs:complexType mixed="true">
+      <xs:attribute ref="xml:space" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LipSync">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Type"/>
+        <xs:element ref="DefaultFrame"/>
+        <xs:element ref="Frames"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DefaultFrame" type="xs:integer"/>
+  <xs:element name="PropertyDefinitions">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="GlobalMessages">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="Message"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Message">
+    <xs:complexType>
+      <xs:attribute name="ID" use="required" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="OldInteractionVariables">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="Plugins">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Plugin"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Plugin">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="FileName"/>
+        <xs:element ref="Data"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Data">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="Rooms">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="UnloadedRoomFolder"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UnloadedRoomFolder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="SubFolders"/>
+        <xs:element ref="UnloadedRooms"/>
+      </xs:sequence>
+      <xs:attribute name="Name" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UnloadedRooms">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="UnloadedRoom"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UnloadedRoom">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Number"/>
+        <xs:element ref="Description"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Number" type="xs:integer"/>
+  <xs:element name="TextParser">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Words"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Words">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="TextParserWord"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TextParserWord">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="WordGroup"/>
+        <xs:element ref="Word"/>
+        <xs:element ref="Type"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="WordGroup" type="xs:integer"/>
+  <xs:element name="Word" type="xs:NCName"/>
+  <xs:element name="PlayerCharacter" type="xs:integer"/>
+  <xs:element name="Cursors">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="MouseCursor"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MouseCursor">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ID"/>
+        <xs:element ref="HotspotX"/>
+        <xs:element ref="HotspotY"/>
+        <xs:element ref="StandardMode"/>
+        <xs:element ref="Image"/>
+        <xs:element ref="View"/>
+        <xs:element ref="Animate"/>
+        <xs:element ref="AnimateOnlyOnHotspots"/>
+        <xs:element ref="AnimateOnlyWhenMoving"/>
+        <xs:element ref="Name"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="StandardMode" type="xs:NCName"/>
+  <xs:element name="Animate" type="xs:NCName"/>
+  <xs:element name="AnimateOnlyOnHotspots" type="xs:NCName"/>
+  <xs:element name="AnimateOnlyWhenMoving" type="xs:NCName"/>
+  <xs:element name="Fonts">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="Font"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Palette">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="PaletteEntry"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PaletteEntry">
+    <xs:complexType>
+      <xs:attribute name="Blue" use="required" type="xs:integer"/>
+      <xs:attribute name="Green" use="required" type="xs:integer"/>
+      <xs:attribute name="Index" use="required" type="xs:integer"/>
+      <xs:attribute name="Red" use="required" type="xs:integer"/>
+      <xs:attribute name="Type" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GlobalVariables">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Variables"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Variables">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="DeletedViews">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="Scripts">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ScriptFolder"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ScriptFolder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="SubFolders"/>
+        <xs:element ref="ScriptAndHeaders"/>
+      </xs:sequence>
+      <xs:attribute name="Name" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ScriptAndHeaders">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="ScriptAndHeader"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ScriptAndHeader">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ScriptAndHeader_Header"/>
+        <xs:element ref="ScriptAndHeader_Script"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ScriptAndHeader_Header" type="Script"/>
+  <xs:element name="ScriptAndHeader_Script" type="Script"/>
+  <xs:element name="AudioClipTypes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="AudioClipType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AudioClipType">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="TypeID"/>
+        <xs:element ref="Name"/>
+        <xs:element ref="MaxChannels"/>
+        <xs:element ref="VolumeReductionWhileSpeechPlaying"/>
+        <xs:element ref="CrossfadeClips"/>
+        <xs:element ref="BackwardsCompatibilityType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TypeID" type="xs:integer"/>
+  <xs:element name="MaxChannels" type="xs:integer"/>
+  <xs:element name="VolumeReductionWhileSpeechPlaying" type="xs:integer"/>
+  <xs:element name="CrossfadeClips" type="xs:NCName"/>
+  <xs:element name="BackwardsCompatibilityType" type="xs:NCName"/>
+  <xs:element name="Component">
+    <xs:complexType>
+      <xs:choice minOccurs="0">
+        <xs:element ref="ProjectUnderControl"/>
+        <xs:element ref="SpeechCenter"/>
+        <xs:sequence>
+          <xs:element ref="SpeechVoxFiles"/>
+          <xs:element ref="PamFiles"/>
+        </xs:sequence>
+      </xs:choice>
+      <xs:attribute name="Name" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ProjectUnderControl" type="xs:NCName"/>
+  <xs:element name="SpeechCenter">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Document"/>
+      </xs:sequence>
+      <xs:attribute name="Version" use="required" type="xs:NMTOKEN"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Document">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Settings"/>
+        <xs:element ref="SpeechLines"/>
+        <xs:element ref="Translations"/>
+      </xs:sequence>
+      <xs:attribute name="Version" use="required" type="xs:NMTOKEN"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SpeechLines">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="SpeechVoxFiles">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="PamFiles">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="Settings">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="CustomFunctions"/>
+          <xs:element ref="VoiceActorScripts"/>
+          <xs:element ref="Translations"/>
+          <xs:element ref="Edit"/>
+          <xs:element ref="DialogParsing"/>
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="GameFileName"/>
+          <xs:element ref="GameName"/>
+          <xs:element ref="UniqueID"/>
+          <xs:element ref="GUIDAsString"/>
+          <xs:element ref="ColorDepth"/>
+          <xs:element ref="CustomResolution"/>
+          <xs:element ref="AllowRelativeAssetResolutions"/>
+          <xs:element ref="CompressSprites"/>
+          <xs:element ref="SaveScreenshots"/>
+          <xs:element ref="RoomTransition"/>
+          <xs:element ref="MouseWheelEnabled"/>
+          <xs:element ref="UseLowResCoordinatesInScript"/>
+          <xs:element ref="TurnBeforeFacing"/>
+          <xs:element ref="TurnBeforeWalking"/>
+          <xs:element ref="ScaleMovementSpeedWithMaskResolution"/>
+          <xs:element ref="SplitResources"/>
+          <xs:element ref="LetterboxMode"/>
+          <xs:element ref="AutoMoveInWalkMode"/>
+          <xs:element ref="PixelPerfect"/>
+          <xs:element ref="WhenInterfaceDisabled"/>
+          <xs:element ref="GUIAlphaStyle"/>
+          <xs:element ref="SpriteAlphaStyle"/>
+          <xs:element ref="RunGameLoopsWhileDialogOptionsDisplayed"/>
+          <xs:element ref="InventoryHotspotMarkerStyle"/>
+          <xs:element ref="InventoryHotspotMarkerSprite"/>
+          <xs:element ref="InventoryHotspotMarkerDotColor"/>
+          <xs:element ref="InventoryHotspotMarkerCrosshairColor"/>
+          <xs:element ref="WalkInLookMode"/>
+          <xs:element ref="AntiGlideMode"/>
+          <xs:element ref="DebugMode"/>
+          <xs:element ref="InventoryCursors"/>
+          <xs:element ref="HandleInvClicksInScript"/>
+          <xs:element ref="DisplayMultipleInventory"/>
+          <xs:element ref="ScriptAPIVersion"/>
+          <xs:element ref="ScriptCompatLevel"/>
+          <xs:element ref="EnforceObjectBasedScript"/>
+          <xs:element ref="EnforceNewStrings"/>
+          <xs:element ref="EnforceNewAudio"/>
+          <xs:element ref="UseOldCustomDialogOptionsAPI"/>
+          <xs:element ref="LeftToRightPrecedence"/>
+          <xs:element ref="PlaySoundOnScore"/>
+          <xs:element ref="CrossfadeMusic"/>
+          <xs:element ref="DialogOptionsGUI"/>
+          <xs:element ref="DialogOptionsGap"/>
+          <xs:element ref="DialogOptionsBullet"/>
+          <xs:element ref="SkipSpeech"/>
+          <xs:element ref="SpeechStyle"/>
+          <xs:element ref="UseGlobalSpeechAnimationDelay"/>
+          <xs:element ref="GlobalSpeechAnimationDelay"/>
+          <xs:element ref="LegacySpeechAnimationSpeed"/>
+          <xs:element ref="NumberDialogOptions"/>
+          <xs:element ref="DialogOptionsBackwards"/>
+          <xs:element ref="SpeechPortraitSide"/>
+          <xs:element ref="DialogScriptSayFunction"/>
+          <xs:element ref="DialogScriptNarrateFunction"/>
+          <xs:element ref="TextWindowGUI"/>
+          <xs:element ref="AlwaysDisplayTextAsSpeech"/>
+          <xs:element ref="AntiAliasFonts"/>
+          <xs:element ref="ThoughtGUI"/>
+          <xs:element ref="BackwardsText"/>
+          <xs:element ref="MaximumScore"/>
+          <xs:element ref="HasMODMusic"/>
+          <xs:element ref="DefaultRoomMaskResolution"/>
+          <xs:element ref="GameExplorerEnabled"/>
+          <xs:element ref="Description"/>
+          <xs:element ref="ReleaseDate"/>
+          <xs:element ref="Genre"/>
+          <xs:element ref="Version"/>
+          <xs:element ref="WindowsExperienceIndex"/>
+          <xs:element ref="DeveloperName"/>
+          <xs:element ref="DeveloperURL"/>
+          <xs:element ref="EnhancedSaveGames"/>
+          <xs:element ref="SaveGameFileExtension"/>
+          <xs:element ref="SaveGameFolderName"/>
+          <xs:element ref="BinaryFilesInSourceControl"/>
+          <xs:element ref="AudioIndexer"/>
+          <xs:element ref="BuildTargets"/>
+          <xs:element ref="RenderAtScreenResolution"/>
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CustomFunctions">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="VoiceActorScripts">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Format"/>
+      </xs:sequence>
+      <xs:attribute name="NewParagraph" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Format">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Styles"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Styles">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="CSSStyle"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CSSStyle">
+    <xs:complexType>
+      <xs:attribute name="CSSName" use="required" type="xs:NMTOKEN"/>
+      <xs:attribute name="Color" use="required"/>
+      <xs:attribute name="FontFamily" use="required"/>
+      <xs:attribute name="FontStyle" use="required" type="xs:NCName"/>
+      <xs:attribute name="FontWeight" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Edit">
+    <xs:complexType>
+      <xs:attribute name="ExitEditModeAfterSave" use="required" type="xs:boolean"/>
+      <xs:attribute name="RefreshProjectAfterSave" use="required" type="xs:NCName"/>
+      <xs:attribute name="ShowWarning" use="required" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DialogParsing">
+    <xs:complexType>
+      <xs:attribute name="ShowAllOoptionText" use="required" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GameFileName" type="xs:NCName"/>
+  <xs:element name="GameName" type="xs:NCName"/>
+  <xs:element name="UniqueID" type="xs:integer"/>
+  <xs:element name="GUIDAsString" type="xs:string"/>
+  <xs:element name="ColorDepth" type="xs:NCName"/>
+  <xs:element name="CustomResolution" type="xs:string"/>
+  <xs:element name="AllowRelativeAssetResolutions" type="xs:NCName"/>
+  <xs:element name="CompressSprites" type="xs:NCName"/>
+  <xs:element name="SaveScreenshots" type="xs:NCName"/>
+  <xs:element name="RoomTransition" type="xs:NCName"/>
+  <xs:element name="MouseWheelEnabled" type="xs:NCName"/>
+  <xs:element name="UseLowResCoordinatesInScript" type="xs:NCName"/>
+  <xs:element name="TurnBeforeFacing" type="xs:NCName"/>
+  <xs:element name="ScaleMovementSpeedWithMaskResolution" type="xs:NCName"/>
+  <xs:element name="SplitResources" type="xs:integer"/>
+  <xs:element name="LetterboxMode" type="xs:NCName"/>
+  <xs:element name="AutoMoveInWalkMode" type="xs:NCName"/>
+  <xs:element name="PixelPerfect" type="xs:NCName"/>
+  <xs:element name="WhenInterfaceDisabled" type="xs:NCName"/>
+  <xs:element name="GUIAlphaStyle" type="xs:NCName"/>
+  <xs:element name="SpriteAlphaStyle" type="xs:NCName"/>
+  <xs:element name="RunGameLoopsWhileDialogOptionsDisplayed" type="xs:NCName"/>
+  <xs:element name="InventoryHotspotMarkerStyle" type="xs:NCName"/>
+  <xs:element name="InventoryHotspotMarkerSprite" type="xs:integer"/>
+  <xs:element name="InventoryHotspotMarkerDotColor" type="xs:integer"/>
+  <xs:element name="InventoryHotspotMarkerCrosshairColor" type="xs:integer"/>
+  <xs:element name="WalkInLookMode" type="xs:NCName"/>
+  <xs:element name="AntiGlideMode" type="xs:NCName"/>
+  <xs:element name="DebugMode" type="xs:NCName"/>
+  <xs:element name="InventoryCursors" type="xs:NCName"/>
+  <xs:element name="HandleInvClicksInScript" type="xs:NCName"/>
+  <xs:element name="DisplayMultipleInventory" type="xs:NCName"/>
+  <xs:element name="ScriptAPIVersion" type="xs:NCName"/>
+  <xs:element name="ScriptCompatLevel" type="xs:NCName"/>
+  <xs:element name="EnforceObjectBasedScript" type="xs:NCName"/>
+  <xs:element name="EnforceNewStrings" type="xs:NCName"/>
+  <xs:element name="EnforceNewAudio" type="xs:NCName"/>
+  <xs:element name="UseOldCustomDialogOptionsAPI" type="xs:NCName"/>
+  <xs:element name="LeftToRightPrecedence" type="xs:NCName"/>
+  <xs:element name="PlaySoundOnScore" type="xs:integer"/>
+  <xs:element name="CrossfadeMusic" type="xs:NCName"/>
+  <xs:element name="DialogOptionsGUI" type="xs:integer"/>
+  <xs:element name="DialogOptionsGap" type="xs:integer"/>
+  <xs:element name="DialogOptionsBullet" type="xs:integer"/>
+  <xs:element name="SkipSpeech" type="xs:NCName"/>
+  <xs:element name="SpeechStyle" type="xs:NCName"/>
+  <xs:element name="UseGlobalSpeechAnimationDelay" type="xs:NCName"/>
+  <xs:element name="GlobalSpeechAnimationDelay" type="xs:integer"/>
+  <xs:element name="LegacySpeechAnimationSpeed" type="xs:NCName"/>
+  <xs:element name="NumberDialogOptions" type="xs:NCName"/>
+  <xs:element name="DialogOptionsBackwards" type="xs:NCName"/>
+  <xs:element name="SpeechPortraitSide" type="xs:NCName"/>
+  <xs:element name="DialogScriptSayFunction">
+    <xs:complexType>
+      <xs:attribute name="IsNull" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DialogScriptNarrateFunction">
+    <xs:complexType>
+      <xs:attribute name="IsNull" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AlwaysDisplayTextAsSpeech" type="xs:NCName"/>
+  <xs:element name="AntiAliasFonts" type="xs:NCName"/>
+  <xs:element name="ThoughtGUI" type="xs:integer"/>
+  <xs:element name="BackwardsText" type="xs:NCName"/>
+  <xs:element name="MaximumScore" type="xs:integer"/>
+  <xs:element name="HasMODMusic" type="xs:NCName"/>
+  <xs:element name="DefaultRoomMaskResolution" type="xs:integer"/>
+  <xs:element name="GameExplorerEnabled" type="xs:NCName"/>
+  <xs:element name="ReleaseDate" type="xs:date"/>
+  <xs:element name="Genre" type="xs:NCName"/>
+  <xs:element name="WindowsExperienceIndex" type="xs:integer"/>
+  <xs:element name="DeveloperName">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="DeveloperURL">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="EnhancedSaveGames" type="xs:NCName"/>
+  <xs:element name="SaveGameFileExtension">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="SaveGameFolderName" type="xs:NCName"/>
+  <xs:element name="BinaryFilesInSourceControl" type="xs:NCName"/>
+  <xs:element name="AudioIndexer" type="xs:integer"/>
+  <xs:element name="BuildTargets">
+    <xs:complexType mixed="true">
+      <xs:attribute ref="xml:space" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RenderAtScreenResolution" type="xs:NCName"/>
+  <xs:element name="Type" type="xs:NCName"/>
+  <xs:element name="Frames">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element maxOccurs="unbounded" ref="CharsForFrame"/>
+        <xs:element maxOccurs="unbounded" ref="ViewFrame"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CharsForFrame">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="ViewFrame">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ID"/>
+        <xs:element ref="Image"/>
+        <xs:element ref="Flipped"/>
+        <xs:element ref="Delay"/>
+        <xs:element ref="Sound"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Flipped" type="xs:NCName"/>
+  <xs:element name="Delay" type="xs:integer"/>
+  <xs:element name="Sound" type="xs:integer"/>
+  <xs:element name="FileName" type="xs:string"/>
+  <xs:element name="SubFolders">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="AudioClipFolder"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="SpriteFolder"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Description">
+    <xs:complexType mixed="true">
+      <xs:attribute name="IsNull" type="xs:NCName"/>
+      <xs:attribute ref="xml:space"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GUIs">
+    <xs:complexType>
+      <xs:sequence minOccurs="0">
+        <xs:element ref="GUIFolder"/>
+        <xs:element maxOccurs="unbounded" ref="GUIMain"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GUIFolder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="SubFolders"/>
+        <xs:element ref="GUIs"/>
+      </xs:sequence>
+      <xs:attribute name="Name" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GUIMain">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice>
+          <xs:element ref="TextWindowGUI"/>
+          <xs:element ref="NormalGUI"/>
+        </xs:choice>
+        <xs:element ref="Controls"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NormalGUI">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="OnClick"/>
+        <xs:element ref="Height"/>
+        <xs:element ref="Width"/>
+        <xs:element ref="Left"/>
+        <xs:element ref="Top"/>
+        <xs:element ref="Clickable"/>
+        <xs:element ref="Visible"/>
+        <xs:element ref="PopupStyle"/>
+        <xs:element ref="PopupYPos"/>
+        <xs:element ref="ZOrder"/>
+        <xs:element ref="BorderColor"/>
+        <xs:element ref="Transparency"/>
+        <xs:element ref="BackgroundColor"/>
+        <xs:element ref="BackgroundImage"/>
+        <xs:element ref="ID"/>
+        <xs:element ref="Name"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PopupStyle" type="xs:NCName"/>
+  <xs:element name="PopupYPos" type="xs:integer"/>
+  <xs:element name="BorderColor" type="xs:integer"/>
+  <xs:element name="Transparency" type="xs:integer"/>
+  <xs:element name="Controls">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="GUIInventory"/>
+        <xs:choice>
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element ref="GUIButton"/>
+            <xs:element ref="GUILabel"/>
+            <xs:element ref="GUIListBox"/>
+            <xs:element ref="GUISlider"/>
+            <xs:element ref="GUITextBox"/>
+          </xs:choice>
+          <xs:element minOccurs="0" maxOccurs="unbounded" ref="GUITextWindowEdge"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GUIInventory">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ItemWidth"/>
+        <xs:element ref="ItemHeight"/>
+        <xs:element ref="CharacterID"/>
+        <xs:element ref="Height"/>
+        <xs:element ref="Locked"/>
+        <xs:element ref="Width"/>
+        <xs:element ref="Left"/>
+        <xs:element ref="Top"/>
+        <xs:element ref="ZOrder"/>
+        <xs:element ref="ID"/>
+        <xs:element ref="Name"/>
+        <xs:element ref="Clickable"/>
+        <xs:element ref="Enabled"/>
+        <xs:element ref="Visible"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ItemWidth" type="xs:integer"/>
+  <xs:element name="ItemHeight" type="xs:integer"/>
+  <xs:element name="CharacterID" type="xs:integer"/>
+  <xs:element name="GUIButton">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="OnClick"/>
+        <xs:element ref="ClickAction"/>
+        <xs:element ref="NewModeNumber"/>
+        <xs:element ref="ClipImage"/>
+        <xs:element ref="TextAlignment"/>
+        <xs:element ref="TextColor"/>
+        <xs:element ref="Font"/>
+        <xs:element ref="PushedImage"/>
+        <xs:element ref="MouseoverImage"/>
+        <xs:element ref="Image"/>
+        <xs:element ref="Text"/>
+        <xs:element ref="Height"/>
+        <xs:element ref="Locked"/>
+        <xs:element ref="Width"/>
+        <xs:element ref="Left"/>
+        <xs:element ref="Top"/>
+        <xs:element ref="ZOrder"/>
+        <xs:element ref="ID"/>
+        <xs:element ref="Name"/>
+        <xs:element ref="Clickable"/>
+        <xs:element ref="Enabled"/>
+        <xs:element ref="Visible"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ClickAction" type="xs:NCName"/>
+  <xs:element name="NewModeNumber" type="xs:integer"/>
+  <xs:element name="ClipImage" type="xs:NCName"/>
+  <xs:element name="PushedImage" type="xs:integer"/>
+  <xs:element name="MouseoverImage" type="xs:integer"/>
+  <xs:element name="GUILabel">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="TextAlignment"/>
+        <xs:element ref="TextColor"/>
+        <xs:element ref="Font"/>
+        <xs:element ref="Text"/>
+        <xs:element ref="Height"/>
+        <xs:element ref="Locked"/>
+        <xs:element ref="Width"/>
+        <xs:element ref="Left"/>
+        <xs:element ref="Top"/>
+        <xs:element ref="ZOrder"/>
+        <xs:element ref="ID"/>
+        <xs:element ref="Name"/>
+        <xs:element ref="Clickable"/>
+        <xs:element ref="Enabled"/>
+        <xs:element ref="Visible"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GUIListBox">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="OnSelectionChanged"/>
+        <xs:element ref="ShowScrollArrows"/>
+        <xs:element ref="ShowBorder"/>
+        <xs:element ref="TextAlignment"/>
+        <xs:element ref="TextColor"/>
+        <xs:element ref="SelectedTextColor"/>
+        <xs:element ref="SelectedBackgroundColor"/>
+        <xs:element ref="Font"/>
+        <xs:element ref="Translated"/>
+        <xs:element ref="Height"/>
+        <xs:element ref="Locked"/>
+        <xs:element ref="Width"/>
+        <xs:element ref="Left"/>
+        <xs:element ref="Top"/>
+        <xs:element ref="ZOrder"/>
+        <xs:element ref="ID"/>
+        <xs:element ref="Name"/>
+        <xs:element ref="Clickable"/>
+        <xs:element ref="Enabled"/>
+        <xs:element ref="Visible"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="OnSelectionChanged" type="xs:string"/>
+  <xs:element name="ShowScrollArrows" type="xs:NCName"/>
+  <xs:element name="SelectedTextColor" type="xs:integer"/>
+  <xs:element name="SelectedBackgroundColor" type="xs:integer"/>
+  <xs:element name="Translated" type="xs:NCName"/>
+  <xs:element name="GUISlider">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="OnChange"/>
+        <xs:element ref="HandleImage"/>
+        <xs:element ref="HandleOffset"/>
+        <xs:element ref="BackgroundImage"/>
+        <xs:element ref="MinValue"/>
+        <xs:element ref="MaxValue"/>
+        <xs:element ref="Value"/>
+        <xs:element ref="Height"/>
+        <xs:element ref="Locked"/>
+        <xs:element ref="Width"/>
+        <xs:element ref="Left"/>
+        <xs:element ref="Top"/>
+        <xs:element ref="ZOrder"/>
+        <xs:element ref="ID"/>
+        <xs:element ref="Name"/>
+        <xs:element ref="Clickable"/>
+        <xs:element ref="Enabled"/>
+        <xs:element ref="Visible"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="OnChange" type="xs:NCName"/>
+  <xs:element name="HandleImage" type="xs:integer"/>
+  <xs:element name="HandleOffset" type="xs:integer"/>
+  <xs:element name="MinValue" type="xs:integer"/>
+  <xs:element name="MaxValue" type="xs:integer"/>
+  <xs:element name="Value" type="xs:integer"/>
+  <xs:element name="GUITextBox">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="OnActivate"/>
+        <xs:element ref="TextColor"/>
+        <xs:element ref="Font"/>
+        <xs:element ref="ShowBorder"/>
+        <xs:element ref="Text"/>
+        <xs:element ref="Height"/>
+        <xs:element ref="Locked"/>
+        <xs:element ref="Width"/>
+        <xs:element ref="Left"/>
+        <xs:element ref="Top"/>
+        <xs:element ref="ZOrder"/>
+        <xs:element ref="ID"/>
+        <xs:element ref="Name"/>
+        <xs:element ref="Clickable"/>
+        <xs:element ref="Enabled"/>
+        <xs:element ref="Visible"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="OnActivate" type="xs:NCName"/>
+  <xs:element name="GUITextWindowEdge">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Image"/>
+        <xs:element ref="Height"/>
+        <xs:element ref="Locked"/>
+        <xs:element ref="Width"/>
+        <xs:element ref="Left"/>
+        <xs:element ref="Top"/>
+        <xs:element ref="ZOrder"/>
+        <xs:element ref="ID"/>
+        <xs:element ref="Name"/>
+        <xs:element ref="Clickable"/>
+        <xs:element ref="Enabled"/>
+        <xs:element ref="Visible"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InventoryItems">
+    <xs:complexType>
+      <xs:sequence minOccurs="0">
+        <xs:element ref="InventoryItemFolder"/>
+        <xs:element maxOccurs="unbounded" ref="InventoryItem"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InventoryItemFolder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="SubFolders"/>
+        <xs:element ref="InventoryItems"/>
+      </xs:sequence>
+      <xs:attribute name="Name" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InventoryItem">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ID"/>
+        <xs:element ref="HotspotX"/>
+        <xs:element ref="HotspotY"/>
+        <xs:element ref="PlayerStartsWithItem"/>
+        <xs:element ref="CursorImage"/>
+        <xs:element ref="Image"/>
+        <xs:element ref="Description"/>
+        <xs:element ref="Name"/>
+        <xs:element ref="Properties"/>
+        <xs:element ref="Interactions"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PlayerStartsWithItem" type="xs:NCName"/>
+  <xs:element name="CursorImage" type="xs:integer"/>
+  <xs:element name="Characters">
+    <xs:complexType>
+      <xs:sequence minOccurs="0">
+        <xs:element ref="CharacterFolder"/>
+        <xs:element ref="Character"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CharacterFolder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="SubFolders"/>
+        <xs:element ref="Characters"/>
+      </xs:sequence>
+      <xs:attribute name="Name" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Character">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ID"/>
+        <xs:element ref="ScriptName"/>
+        <xs:element ref="RealName"/>
+        <xs:element ref="NormalView"/>
+        <xs:element ref="SpeechView"/>
+        <xs:element ref="IdleView"/>
+        <xs:element ref="ThinkingView"/>
+        <xs:element ref="BlinkingView"/>
+        <xs:element ref="StartingRoom"/>
+        <xs:element ref="StartX"/>
+        <xs:element ref="StartY"/>
+        <xs:element ref="UniformMovementSpeed"/>
+        <xs:element ref="MovementSpeed"/>
+        <xs:element ref="MovementSpeedX"/>
+        <xs:element ref="MovementSpeedY"/>
+        <xs:element ref="AnimationDelay"/>
+        <xs:element ref="SpeechAnimationDelay"/>
+        <xs:element ref="SpeechColor"/>
+        <xs:element ref="Solid"/>
+        <xs:element ref="Clickable"/>
+        <xs:element ref="UseRoomAreaScaling"/>
+        <xs:element ref="UseRoomAreaLighting"/>
+        <xs:element ref="TurnBeforeWalking"/>
+        <xs:element ref="DiagonalLoops"/>
+        <xs:element ref="AdjustSpeedWithScaling"/>
+        <xs:element ref="AdjustVolumeWithScaling"/>
+        <xs:element ref="MovementLinkedToAnimation"/>
+        <xs:element ref="Properties"/>
+        <xs:element ref="Interactions"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ScriptName" type="xs:NCName"/>
+  <xs:element name="RealName" type="xs:NCName"/>
+  <xs:element name="NormalView" type="xs:integer"/>
+  <xs:element name="SpeechView" type="xs:integer"/>
+  <xs:element name="IdleView" type="xs:integer"/>
+  <xs:element name="ThinkingView" type="xs:integer"/>
+  <xs:element name="BlinkingView" type="xs:integer"/>
+  <xs:element name="StartingRoom" type="xs:integer"/>
+  <xs:element name="StartX" type="xs:integer"/>
+  <xs:element name="StartY" type="xs:integer"/>
+  <xs:element name="UniformMovementSpeed" type="xs:NCName"/>
+  <xs:element name="MovementSpeed" type="xs:integer"/>
+  <xs:element name="MovementSpeedX" type="xs:integer"/>
+  <xs:element name="MovementSpeedY" type="xs:integer"/>
+  <xs:element name="AnimationDelay" type="xs:integer"/>
+  <xs:element name="SpeechAnimationDelay" type="xs:integer"/>
+  <xs:element name="SpeechColor" type="xs:integer"/>
+  <xs:element name="Solid" type="xs:NCName"/>
+  <xs:element name="UseRoomAreaScaling" type="xs:NCName"/>
+  <xs:element name="UseRoomAreaLighting" type="xs:NCName"/>
+  <xs:element name="DiagonalLoops" type="xs:NCName"/>
+  <xs:element name="AdjustSpeedWithScaling" type="xs:NCName"/>
+  <xs:element name="AdjustVolumeWithScaling" type="xs:NCName"/>
+  <xs:element name="MovementLinkedToAnimation" type="xs:NCName"/>
+  <xs:element name="Dialogs">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="DialogFolder"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DialogFolder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="SubFolders"/>
+        <xs:element ref="Dialogs"/>
+      </xs:sequence>
+      <xs:attribute name="Name" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ID" type="xs:integer"/>
+  <xs:element name="HotspotX" type="xs:integer"/>
+  <xs:element name="HotspotY" type="xs:integer"/>
+  <xs:element name="Image" type="xs:integer"/>
+  <xs:element name="View">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="ID"/>
+        <xs:element ref="Name"/>
+        <xs:element ref="Loops"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Loops">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="Loop"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Loop">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ID"/>
+        <xs:element ref="RunNextLoop"/>
+        <xs:element ref="Frames"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RunNextLoop" type="xs:NCName"/>
+  <xs:element name="Name">
+    <xs:complexType mixed="true">
+      <xs:attribute ref="xml:space"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Font">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="ID"/>
+        <xs:element ref="Name"/>
+        <xs:element ref="AutoOutlineStyle"/>
+        <xs:element ref="AutoOutlineThickness"/>
+        <xs:element ref="LineSpacing"/>
+        <xs:element ref="OutlineFont"/>
+        <xs:element ref="OutlineStyle"/>
+        <xs:element ref="PointSize"/>
+        <xs:element ref="SizeMultiplier"/>
+        <xs:element ref="SourceFilename"/>
+        <xs:element ref="VerticalOffset"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AutoOutlineStyle" type="xs:NCName"/>
+  <xs:element name="AutoOutlineThickness" type="xs:integer"/>
+  <xs:element name="LineSpacing" type="xs:integer"/>
+  <xs:element name="OutlineFont" type="xs:integer"/>
+  <xs:element name="OutlineStyle" type="xs:NCName"/>
+  <xs:element name="PointSize" type="xs:integer"/>
+  <xs:element name="SizeMultiplier" type="xs:integer"/>
+  <xs:element name="SourceFilename">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="VerticalOffset" type="xs:integer"/>
+  <xs:element name="Sprites">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="SpriteFolder"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="Sprite"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Sprite">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Source"/>
+      </xs:sequence>
+      <xs:attribute name="AlphaChannel" use="required" type="xs:NCName"/>
+      <xs:attribute name="ColorDepth" use="required" type="xs:integer"/>
+      <xs:attribute name="Height" use="required" type="xs:integer"/>
+      <xs:attribute name="Resolution" use="required" type="xs:NCName"/>
+      <xs:attribute name="Slot" use="required" type="xs:integer"/>
+      <xs:attribute name="Width" use="required" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Source">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="FileName"/>
+        <xs:element ref="OffsetX"/>
+        <xs:element ref="OffsetY"/>
+        <xs:element ref="ImportHeight"/>
+        <xs:element ref="ImportWidth"/>
+        <xs:element ref="ImportAsTile"/>
+        <xs:element ref="Frame"/>
+        <xs:element ref="RemapToGamePalette"/>
+        <xs:element ref="RemapToRoomPalette"/>
+        <xs:element ref="ImportMethod"/>
+        <xs:element ref="ImportAlphaChannel"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="OffsetX" type="xs:integer"/>
+  <xs:element name="OffsetY" type="xs:integer"/>
+  <xs:element name="ImportHeight" type="xs:integer"/>
+  <xs:element name="ImportWidth" type="xs:integer"/>
+  <xs:element name="ImportAsTile" type="xs:NCName"/>
+  <xs:element name="Frame" type="xs:integer"/>
+  <xs:element name="RemapToGamePalette" type="xs:NCName"/>
+  <xs:element name="RemapToRoomPalette" type="xs:NCName"/>
+  <xs:element name="ImportMethod" type="xs:NCName"/>
+  <xs:element name="ImportAlphaChannel" type="xs:NCName"/>
+  <xs:element name="Views">
+    <xs:complexType>
+      <xs:sequence minOccurs="0">
+        <xs:element ref="ViewFolder"/>
+        <xs:element ref="View"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ViewFolder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="SubFolders"/>
+        <xs:element ref="Views"/>
+      </xs:sequence>
+      <xs:attribute name="Name" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="Script">
+    <xs:sequence>
+      <xs:element ref="Script"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Script">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="FileName"/>
+        <xs:element ref="Name"/>
+        <xs:element ref="Description"/>
+        <xs:element ref="Author"/>
+        <xs:element ref="Version"/>
+        <xs:element ref="Key"/>
+        <xs:element ref="IsHeader"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Author">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="Key" type="xs:integer"/>
+  <xs:element name="IsHeader" type="xs:NCName"/>
+  <xs:element name="AudioClips">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="AudioClipFolder"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Translations">
+    <xs:complexType>
+      <xs:attribute name="EnableEditing" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TurnBeforeWalking" type="xs:NCName"/>
+  <xs:element name="TextWindowGUI">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="BackgroundColor"/>
+        <xs:element ref="BackgroundImage"/>
+        <xs:element ref="ID"/>
+        <xs:element ref="Name"/>
+        <xs:element ref="TextColor"/>
+        <xs:element ref="Padding"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Padding" type="xs:integer"/>
+  <xs:element name="Version" type="xs:string"/>
+  <xs:element name="SpriteFolder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="SubFolders"/>
+        <xs:element ref="Sprites"/>
+      </xs:sequence>
+      <xs:attribute name="Name" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AudioClipFolder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="SubFolders"/>
+        <xs:sequence minOccurs="0">
+          <xs:element ref="AudioClips"/>
+          <xs:element ref="AudioClipFolder"/>
+          <xs:element ref="DefaultVolume"/>
+          <xs:element ref="DefaultPriority"/>
+          <xs:element ref="DefaultRepeat"/>
+          <xs:element ref="DefaultBundlingType"/>
+          <xs:element ref="DefaultType"/>
+        </xs:sequence>
+      </xs:sequence>
+      <xs:attribute name="Name" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DefaultVolume" type="xs:integer"/>
+  <xs:element name="DefaultPriority" type="xs:NCName"/>
+  <xs:element name="DefaultRepeat" type="xs:NCName"/>
+  <xs:element name="DefaultBundlingType" type="xs:NCName"/>
+  <xs:element name="DefaultType" type="xs:integer"/>
+  <xs:element name="OnClick" type="xs:string"/>
+  <xs:element name="Height" type="xs:integer"/>
+  <xs:element name="Width" type="xs:integer"/>
+  <xs:element name="Left" type="xs:integer"/>
+  <xs:element name="Top" type="xs:integer"/>
+  <xs:element name="Clickable" type="xs:NCName"/>
+  <xs:element name="Visible" type="xs:NCName"/>
+  <xs:element name="ZOrder" type="xs:integer"/>
+  <xs:element name="BackgroundColor" type="xs:integer"/>
+  <xs:element name="BackgroundImage" type="xs:integer"/>
+  <xs:element name="Locked" type="xs:NCName"/>
+  <xs:element name="Enabled" type="xs:NCName"/>
+  <xs:element name="TextAlignment" type="xs:NCName"/>
+  <xs:element name="TextColor" type="xs:integer"/>
+  <xs:element name="Text">
+    <xs:complexType mixed="true">
+      <xs:attribute ref="xml:space"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ShowBorder" type="xs:NCName"/>
+  <xs:element name="Properties">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="Interactions">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="Event"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Event">
+    <xs:complexType mixed="true">
+      <xs:attribute name="Index" use="required" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
